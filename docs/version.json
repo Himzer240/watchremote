@@ -1,0 +1,8 @@
+{
+  "androidVersion": "1.0",
+  "androidCode": 1,
+  "android": "https://raw.githubusercontent.com/Himzer240/watchremote/main/releases/android/watchremote-1.0.apk",
+  "watchVersion": "1.0",
+  "watch": "https://raw.githubusercontent.com/Himzer240/watchremote/main/releases/watch/watchremote-1.0.rpk",
+  "notes": "首个版本：手表滑动操控手机"
+}
