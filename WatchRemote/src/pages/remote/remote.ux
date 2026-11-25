@@ -104,11 +104,11 @@ export default {
 
   sendUp() { this.send('up') },
   sendDown() { this.send('down') },
-  sendLeft() { this.send('left') },
+  sendLeft() { this.send('back') },
   sendRight() { this.send('right') },
 
   send(act) {
-    const names = { up: '下翻', down: '上翻', left: '返回', right: '下一页', top: '回顶部' }
+    const names = { up: '下翻', down: '上翻', left: '左滑', right: '右滑', top: '回顶部', back: '返回' }
     this.dirTx = names[act] || act
     if (!this.conn) { this.tip('没有连接通道'); return }
     const that = this

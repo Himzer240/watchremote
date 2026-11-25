@@ -64,27 +64,35 @@ public class RemoteService extends AccessibilityService {
         DisplayMetrics dm = getResources().getDisplayMetrics();
         int w = dm.widthPixels;
         int h = dm.heightPixels;
+        // 所有手势都从屏幕正中间起手，不碰屏幕边缘，免得被系统当成返回手势直接退出
+        float cx = w / 2f;
+        float cy = h / 2f;
+        float dy = h * 0.30f;
+        float dx = w * 0.32f;
         switch (act) {
             case "up":      // 手指往上滑 = 内容往下翻
-                swipe(w / 2, h * 0.72f, w / 2, h * 0.28f);
+                swipe(cx, cy, cx, cy - dy);
                 break;
             case "down":    // 手指往下滑 = 内容往上翻
-                swipe(w / 2, h * 0.28f, w / 2, h * 0.72f);
+                swipe(cx, cy, cx, cy + dy);
                 break;
-            case "right":   // 往左滑 = 翻到下一页
-                swipe(w * 0.84f, h / 2f, w * 0.16f, h / 2f);
+            case "left":    // 从中间往左滑
+                swipe(cx, cy, cx - dx, cy);
                 break;
-            case "left":    // 返回上一页
-                performGlobalAction(GLOBAL_ACTION_BACK);
+            case "right":   // 从中间往右滑
+                swipe(cx, cy, cx + dx, cy);
                 break;
-            case "top":     // 连滑两次到顶
-                swipe(w / 2, h * 0.7f, w / 2, h * 0.2f);
+            case "top":     // 从中间连续两次上滑到顶
+                swipe(cx, cy, cx, cy - dy);
                 main.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        swipe(w / 2, h * 0.7f, w / 2, h * 0.2f);
+                        swipe(cx, cy, cx, cy - dy);
                     }
                 }, 220);
+                break;
+            case "back":
+                performGlobalAction(GLOBAL_ACTION_BACK);
                 break;
             default:
                 break;
