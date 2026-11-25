@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    android:paddingLeft="18dp"
+    android:paddingRight="18dp"
+    android:paddingTop="22dp"
+    android:paddingBottom="18dp"
+    android:tag="pageBg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="吃药提醒"
+            android:textColor="@color/text"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btnRefresh"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_watch_line" />
+
+        <TextView
+            android:id="@+id/btnReconnect"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:gravity="center"
+            android:text="↻"
+            android:textColor="#1B1F27"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/btnDnd"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_bell_line" />
+
+        <ImageView
+            android:id="@+id/btnSettings"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_gear_line" />
+
+        <ImageView
+            android:id="@+id/btnAbout"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_info_line" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/todayText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/card"
+        android:lineSpacingExtra="3dp"
+        android:padding="13dp"
+        android:tag="accentSoft"
+        android:text="今天还没有用药安排"
+        android:textColor="@color/sub"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="@color/sub"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:id="@+id/permBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_warn"
+        android:orientation="vertical"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="6dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/permText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/warnText"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btnPerm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="2dp"
+            android:background="@android:color/transparent"
+            android:elevation="0dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:stateListAnimator="@null"
+            android:text="去开启 →"
+            android:textAllCaps="false"
+            android:textColor="@color/warnText"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="我的药"
+        android:textColor="@color/text"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <com.doubao.watchremote.PullRefreshScrollView
+        android:id="@+id/pageBg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="6dp">
+
+            <LinearLayout
+                android:id="@+id/listBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/emptyText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:gravity="center"
+                android:lineSpacingExtra="4dp"
+                android:text="还没有添加药品\n点下面的按钮，添加你的第一个吃药提醒"
+                android:textColor="@color/sub"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </com.doubao.watchremote.PullRefreshScrollView>
+
+    <LinearLayout
+        android:id="@+id/todayHd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/todayTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="今日已服用"
+            android:textColor="@color/text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/btnToggleLog"
+            android:layout_width="34dp"
+            android:layout_height="30dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:gravity="center"
+            android:text="▼"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/logText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="4dp"
+        android:maxLines="3"
+        android:text="暂无记录"
+        android:textColor="@color/sub"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_btn_primary"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:tag="accentBg"
+        android:text="＋  添加吃药提醒"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_btn_ghost"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:tag="accentText"
+        android:text="测试一下提醒（5 秒后）"
+        android:textAllCaps="false"
+        android:textColor="@color/primary"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:lineSpacingExtra="4dp"
+        android:text="提示：允许本应用后台运行并加入电池优化白名单，否则到点可能弹不出。重启手机后提醒会自动恢复。"
+        android:textColor="@color/sub"
+        android:textSize="12sp" />
+    </LinearLayout>
+</LinearLayout>

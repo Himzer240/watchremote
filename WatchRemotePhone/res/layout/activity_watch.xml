@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:tag="pageBg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:elevation="0dp"
+            android:minWidth="0dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:stateListAnimator="@null"
+            android:text="返回"
+            android:textAllCaps="false"
+            android:textColor="@color/sub"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:text="手表端"
+            android:textColor="@color/text"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:lineSpacingExtra="3dp"
+        android:text="手机一键把计划送到手表（走小米运动健康的穿戴通道，不用连电脑、不用导文件）。提醒还是手机发，手表负责看和打卡。"
+        android:textColor="@color/sub"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/btnConnect"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_btn_ghost"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:text="连接到手表（只连接，不发计划）"
+        android:textAllCaps="false"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtConn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="@color/sub"
+        android:textSize="13sp" />
+
+    <Button
+        android:id="@+id/btnSync"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_btn_primary"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:tag="accentBg"
+        android:text="同步计划到手表"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/txtSync"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="3dp"
+        android:text=""
+        android:textColor="@color/sub"
+        android:textIsSelectable="true"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btnDownloadWatch"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_btn_ghost"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:text="下载表端软件（取最新版）"
+        android:textAllCaps="false"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnExport"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/bg_btn_ghost"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:text="安装手表端"
+        android:textAllCaps="false"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnOpenHealth"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_btn_ghost"
+        android:elevation="0dp"
+        android:stateListAnimator="@null"
+        android:text="打开小米运动健康"
+        android:textAllCaps="false"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtPath"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=""
+        android:textColor="@color/sub"
+        android:textIsSelectable="true"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="第一次用：先把表端装上"
+        android:textColor="@color/text"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:lineSpacingExtra="4dp"
+        android:text="1. 点上面的「安装手表端」，系统会问用哪个程序打开\n2. 选「表盘自定义工具」这类装表程序，进去点安装\n3. 手表应用列表出现「吃药提醒」\n4. 回到这里点「同步计划到手表」，计划就过去了\n\n以后改了计划，只要再点一次同步就行。"
+        android:textColor="@color/sub"
+        android:textSize="13sp" />
+
+</LinearLayout>

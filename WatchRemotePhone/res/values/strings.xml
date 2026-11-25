@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">手表遥控</string>
+    <string name="a11y_desc">手表遥控需要无障碍权限，才能替你滑动屏幕、返回上一页。只用来执行你在手表上发出的手势，不读取屏幕内容。</string>
+</resources>

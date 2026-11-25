@@ -1,0 +1,95 @@
+<script>
+import storage from '@system.storage'
+import interconnect from '@system.interconnect'
+
+export default {
+  onCreate() {
+    const that = this
+    try {
+      this.conn = interconnect.instance()
+      this.conn.onmessage = function (msg) {
+        let payload = null
+        try {
+          payload = msg && msg.data !== undefined ? msg.data : msg
+          if (typeof payload === 'string') {
+            payload = JSON.parse(payload)
+          }
+        } catch (e) {
+          payload = null
+        }
+        if (!payload || !payload.tag) {
+          return
+        }
+        // 不管当前在哪个页面，先把数据存下来
+        if (payload.tag === 'plans' && payload.plans) {
+          const normalized = []
+          for (let i = 0; i < payload.plans.length; i++) {
+            const it = payload.plans[i] || {}
+            const times = []
+            const raw = it.times || []
+            for (let t = 0; t < raw.length; t++) {
+              if (typeof raw[t] === 'string') {
+                times.push(raw[t])
+              }
+            }
+            if (!times.length) {
+              continue
+            }
+            normalized.push({
+              id: it.id !== undefined && it.id !== null && it.id !== '' ? '' + it.id : ('p' + (i + 1)),
+              name: it.name || '药品',
+              dose: it.dose || '',
+              meal: it.meal || '',
+              purpose: it.purpose || '',
+              times: times,
+              off: it.off === true,
+              today: typeof it.today === 'number' ? it.today : 0
+            })
+          }
+          storage.set({ key: 'mw_plans', value: JSON.stringify(normalized) })
+          if (payload.paused && payload.paused.length !== undefined) {
+            const ids = {}
+            for (let k = 0; k < normalized.length; k++) {
+              ids[normalized[k].id] = true
+            }
+            const keep = []
+            for (let k = 0; k < payload.paused.length; k++) {
+              if (ids['' + payload.paused[k]]) {
+                keep.push('' + payload.paused[k])
+              }
+            }
+            storage.set({ key: 'mw_paused', value: JSON.stringify(keep) })
+          }
+        }
+        if ((payload.tag === 'theme' || payload.tag === 'plans') && payload.color && payload.color.length >= 7) {
+          globalThis.__accent = payload.color
+          storage.set({ key: 'mw_accent', value: payload.color })
+        }
+        // 再通知当前页面刷新（页面自己决定怎么用）
+        if (typeof globalThis.__pageMsg === 'function') {
+          try {
+            globalThis.__pageMsg({ data: payload })
+          } catch (e) {
+          }
+        }
+      }
+      this.conn.onopen = function () {
+        globalThis.__linkOn = true
+        try {
+          that.conn.send({ data: { tag: 'wantPlans' }, success: function () {}, fail: function () {} })
+          that.conn.send({ data: { tag: 'wantTheme' }, success: function () {}, fail: function () {} })
+        } catch (e) {
+        }
+      }
+      this.conn.onclose = function () {
+        globalThis.__linkOn = false
+      }
+    } catch (e) {
+      console.log('global link fail: ' + e)
+    }
+  },
+  onDestroy() {
+    console.log('medwatch app destroyed')
+  }
+}
+</script>

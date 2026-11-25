@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:tag="pageBg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dp"
+                android:paddingRight="14dp"
+                android:paddingBottom="6dp"
+                android:text="‹ 返回"
+                android:textColor="@color/primary"
+                android:tag="accentText"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="提醒诊断"
+                android:textColor="@color/text"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="3dp"
+            android:text="这里列出“能不能提醒”的每一道关卡。哪一行是 ❌，就点下面的按钮去开。"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/diagStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_card"
+            android:lineSpacingExtra="5dp"
+            android:padding="14dp"
+            android:textColor="@color/text"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btnNotifySettings"
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="打开应用的通知设置"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnReschedule"
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="重新排定全部提醒"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnTest"
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_btn_primary"
+            android:tag="accentBg"
+            android:text="10 秒后发一条测试提醒"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="事件记录（最新在最上面）"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/diagLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_card"
+            android:lineSpacingExtra="4dp"
+            android:padding="14dp"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnClearLog"
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="清空记录"
+            android:textAllCaps="false"
+            android:textColor="@color/sub"
+            android:textSize="13sp" />
+    </LinearLayout>
+</ScrollView>

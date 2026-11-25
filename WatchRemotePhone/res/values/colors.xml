@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1098AD</color>
+    <color name="primaryDark">#0B7A8B</color>
+    <color name="bg">#F3F5F9</color>
+    <color name="card">#FFFFFF</color>
+    <color name="text">#1B1F27</color>
+    <color name="sub">#77808F</color>
+    <color name="line">#E6EAF2</color>
+    <color name="danger">#E5484D</color>
+    <color name="warnBg">#FFF3E0</color>
+    <color name="warnText">#B35C00</color>
+</resources>

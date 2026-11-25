@@ -1,0 +1,132 @@
+<template>
+  <div class="page">
+    <div class="hd">
+      <text class="hdTitle">手表遥控</text>
+      <text class="hdSub">{{connTx}}</text>
+    </div>
+
+    <div class="pad" ontouchstart="ts" ontouchend="te" onclick="tap">
+      <text class="padTx">在这里滑动</text>
+      <text class="padSub">上滑下翻 · 下滑上翻 · 左滑返回 · 右滑下一页</text>
+      <text class="padDir">{{dirTx}}</text>
+    </div>
+
+    <div class="grid">
+      <div class="gBtn" onclick="sendUp">
+        <text class="gTx">下翻</text>
+      </div>
+      <div class="gBtn" onclick="sendDown">
+        <text class="gTx">上翻</text>
+      </div>
+      <div class="gBtn" onclick="sendLeft">
+        <text class="gTx">返回</text>
+      </div>
+      <div class="gBtn" onclick="sendRight">
+        <text class="gTx">下一页</text>
+      </div>
+    </div>
+
+    <div class="toast" if="{{toastOn}}">
+      <text class="toastText">{{tx}}</text>
+    </div>
+  </div>
+</template>
+
+<style>
+  .page { width:432px; height:514px; background-color:#0E1214; padding:14px 16px; flex-direction:column; }
+  .hd { height:44px; flex-direction:row; align-items:center; justify-content:space-between; }
+  .hdTitle { font-size:26px; color:#F2F5F7; font-weight:bold; }
+  .hdSub { font-size:13px; color:#7C8A92; }
+  .pad { flex:1; margin-top:10px; background-color:#141A1E; border-radius:18px; border-width:1px; border-color:#1E2A31; flex-direction:column; justify-content:center; align-items:center; }
+  .padTx { font-size:20px; color:#E8EEF1; font-weight:bold; }
+  .padSub { font-size:13px; color:#7C8A92; margin-top:8px; }
+  .padDir { font-size:15px; color:#5BD6A2; margin-top:10px; font-weight:bold; }
+  .grid { flex-direction:row; margin-top:12px; }
+  .gBtn { flex:1; height:46px; margin-right:8px; background-color:#1E2A31; border-radius:14px; justify-content:center; align-items:center; }
+  .gLast { margin-right:0; }
+  .gTx { font-size:16px; color:#FFFFFF; }
+  .toast { position:absolute; left:96px; right:96px; bottom:64px; height:44px; background-color:#1E2A31; border-radius:22px; justify-content:center; align-items:center; }
+  .toastText { font-size:16px; color:#E8EEF1; }
+</style>
+
+<script>
+import interconnect from '@system.interconnect'
+import vibrator from '@system.vibrator'
+
+export default {
+  data: {
+    dirTx: '滑动试试',
+    tx: '',
+    toastOn: false,
+    connTx: '未连接手机',
+    sx: 0,
+    sy: 0
+  },
+
+  onInit() {
+    const that = this
+    try {
+      this.conn = interconnect.instance()
+      this.conn.onopen = function () { that.connTx = '已连接手机' }
+      this.conn.onclose = function () { that.connTx = '未连接手机' }
+      this.conn.onerror = function () { that.connTx = '连接出错' }
+    } catch (e) {
+      this.conn = null
+      this.connTx = '通道不可用'
+    }
+  },
+
+  onShow() {
+    if (this.conn && typeof this.conn.isConnected === 'function') {
+      try { this.connTx = this.conn.isConnected() ? '已连接手机' : '未连接手机' } catch (e) {}
+    }
+  },
+
+  ts(e) {
+    const t = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0])
+    if (t) { this.sx = t.pageX || t.clientX || 0; this.sy = t.pageY || t.clientY || 0 }
+  },
+
+  te(e) {
+    const t = (e.changedTouches && e.changedTouches[0]) || (e.touches && e.touches[0])
+    if (!t) return
+    const dx = (t.pageX || t.clientX || 0) - this.sx
+    const dy = (t.pageY || t.clientY || 0) - this.sy
+    if (Math.abs(dx) < 24 && Math.abs(dy) < 24) return
+    if (Math.abs(dy) >= Math.abs(dx)) {
+      this.send(dy < 0 ? 'up' : 'down')
+    } else {
+      this.send(dx < 0 ? 'left' : 'right')
+    }
+  },
+
+  tap() { this.send('top') },
+
+  sendUp() { this.send('up') },
+  sendDown() { this.send('down') },
+  sendLeft() { this.send('left') },
+  sendRight() { this.send('right') },
+
+  send(act) {
+    const names = { up: '下翻', down: '上翻', left: '返回', right: '下一页', top: '回顶部' }
+    this.dirTx = names[act] || act
+    if (!this.conn) { this.tip('没有连接通道'); return }
+    const that = this
+    try {
+      this.conn.send({
+        data: { tag: 'remote', act: act },
+        success: function () { that.tip('已发送：' + (names[act] || act)) },
+        fail: function () { that.tip('发送失败，检查手机端是否连上') }
+      })
+    } catch (e) { this.tip('发送失败') }
+    try { vibrator.vibrate({ mode: 'short' }) } catch (e) {}
+  },
+
+  tip(m) {
+    this.tx = m; this.toastOn = true
+    const that = this
+    if (this.t) clearTimeout(this.t)
+    this.t = setTimeout(function () { that.toastOn = false }, 1400)
+  }
+}
+</script>

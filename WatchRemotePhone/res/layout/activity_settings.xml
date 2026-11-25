@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:tag="pageBg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="18dp"
+        android:paddingRight="18dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dp"
+                android:paddingRight="14dp"
+                android:paddingBottom="6dp"
+                android:text="‹ 返回"
+                android:textColor="@color/primary"
+                android:tag="accentText"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="设置"
+                android:textColor="@color/text"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/rowQa"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_btn_primary"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:tag="accentBg"
+            android:text="疑惑问答"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/rowUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:text="检查更新（从 GitHub 下载新版）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvCheckStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="4dp"
+            android:tag="accentText"
+            android:text=""
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="系统设置入口"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowAppInfo"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="应用详情（权限 / 通知 / 电池）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowChannel"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="通知类别（悬浮通知 / 震动）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowFsi"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="全屏通知（锁屏也能弹窗）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="外观"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/rowColor"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:text="主题颜色"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="超时未吃药，隔多久再提醒"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowRepeat"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="每 5 分钟提醒一次"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowDiag"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="提醒诊断（不提醒时点这里）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowLog"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="日志（闪退/进不去时点这里）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowFeedback"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="反馈 / 举报 Bug"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowWatch"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="手表端（装到手表上看和打卡）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowTone"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="表达风格"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowElder"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="老年人模式"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="数据备份"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/btnExport"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="导出备份（可自选要导出哪些内容）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/btnImport"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="从备份恢复（列出备份夹里的文件）"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="4dp"
+            android:text="备份存在应用自己的目录里，不进系统的“下载”夹；覆盖安装不会丢，卸载前先导出。完整路径导出后会提示。"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="危险操作"
+            android:textColor="@color/danger"
+            android:textSize="12sp" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/btnClear"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_danger_outline"
+            android:text="清除所有数据"
+            android:textAllCaps="false"
+            android:textColor="@color/danger"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="4dp"
+            android:text="会删掉全部吃药计划、服药记录，取消已排好的提醒，并把勿扰、提醒方式、主题颜色等设置恢复默认。点按钮时会问你要不要连备份文件一起删。"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="4dp"
+            android:text="说明：通知类别默认已开启悬浮通知和震动；全屏通知只有安卓 14 及以上需要单独允许，系统里没有这个开关的机型可以直接用。"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:letterSpacing="0.04"
+            android:text="高级功能"
+            android:textColor="@color/text"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:stateListAnimator="@null"
+            android:elevation="0dp"
+            android:id="@+id/rowNoCountdown"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:text="去掉确认倒计时：关闭"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="4dp"
+            android:text="开启后，确认「已服用 / 再吃一遍」「保存今日次数」不再等 5 秒或 10 秒，点一下立即生效。"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:letterSpacing="0.04"
+            android:text="混乱模式（娱乐）"
+            android:textColor="@color/text"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/rowChaos"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_ghost"
+            android:elevation="0dp"
+            android:stateListAnimator="@null"
+            android:tag="accentText"
+            android:text="开启混乱模式"
+            android:textAllCaps="false"
+            android:textColor="@color/text"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:lineSpacingExtra="4dp"
+            android:text="开了以后图标还是原来那套，但点进去做的事会变，每次都不一样，背景颜色也会一直变。恢复方法：把应用从后台删掉，重新打开就是正常状态（长按这个按钮也能直接关掉）。"
+            android:textColor="@color/sub"
+            android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>

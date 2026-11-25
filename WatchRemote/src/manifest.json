@@ -1,0 +1,43 @@
+{
+  "package": "com.doubao.watchremote",
+  "name": "手表遥控",
+  "versionName": "1.0",
+  "versionCode": 1,
+  "minPlatformVersion": 1100,
+  "icon": "/common/icon.png",
+  "simulationVersion": "default",
+  "deviceTypeList": [
+    "watch"
+  ],
+  "features": [
+    {
+      "name": "system.router"
+    },
+    {
+      "name": "system.storage"
+    },
+    {
+      "name": "system.vibrator"
+    },
+    {
+      "name": "system.interconnect"
+    }
+  ],
+  "config": {
+    "designWidth": 432,
+    "logLevel": "log"
+  },
+  "router": {
+    "entry": "pages/remote",
+    "pages": {
+      "pages/remote": {
+        "component": "remote",
+        "launchMode": "singleTask"
+      }
+    }
+  },
+  "display": {
+    "backgroundColor": "#0E1214"
+  },
+  "minAPILevel": 1
+}
