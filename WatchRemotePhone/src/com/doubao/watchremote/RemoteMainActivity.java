@@ -3,6 +3,7 @@ package com.doubao.watchremote;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -16,6 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 
 /** 手表遥控 —— 手机端主界面 */
 public class RemoteMainActivity extends Activity {
@@ -89,7 +94,7 @@ public class RemoteMainActivity extends Activity {
         root.addView(btn("安装手表端", "#1F2C33", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RemoteMainActivity.this, WatchActivity.class));
+                installWatch();
             }
         }));
         root.addView(btn("使用说明", "#1F2C33", new View.OnClickListener() {
@@ -126,6 +131,36 @@ public class RemoteMainActivity extends Activity {
         try {
             WatchBridge.start(this);
         } catch (Throwable ignored) {
+        }
+    }
+
+    /** 把内置的手表端包导出，交给系统弹窗选安装工具 */
+    private void installWatch() {
+        try {
+            File dir = ApkProvider.dir(this);
+            File out = new File(dir, "手表遥控-v1.0.bin");
+            InputStream in = getAssets().open("watchremote.bin");
+            FileOutputStream os = new FileOutputStream(out);
+            byte[] buf = new byte[4096];
+            int len;
+            while ((len = in.read(buf)) > 0) os.write(buf, 0, len);
+            os.flush(); os.close(); in.close();
+
+            Uri uri = ApkProvider.uriFor(out);
+            Intent view = new Intent(Intent.ACTION_VIEW);
+            view.setDataAndType(uri, "application/octet-stream");
+            view.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(Intent.createChooser(view, "选一个装手表的程序（如表盘自定义工具）"));
+            Toast.makeText(this, "选好程序后点安装，就装到手表了", Toast.LENGTH_LONG).show();
+        } catch (Throwable e) {
+            try {
+                Intent any = new Intent(Intent.ACTION_VIEW);
+                any.setDataAndType(ApkProvider.uriFor(new File(ApkProvider.dir(this), "手表遥控-v1.0.bin")), "*/*");
+                any.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(Intent.createChooser(any, "选一个装手表的程序"));
+            } catch (Throwable e2) {
+                Toast.makeText(this, "导出失败：" + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
     }
 
