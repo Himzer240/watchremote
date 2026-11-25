@@ -1,4 +1,7 @@
 {
+  "version": "1.0",
+  "versionCode": 1,
+  "versionName": "1.0",
   "androidVersion": "1.0",
   "androidCode": 1,
   "android": "https://raw.githubusercontent.com/Himzer240/watchremote/main/releases/android/watchremote-1.0.apk",

@@ -30,10 +30,9 @@ public class App extends Application {
             @Override
             public void onActivityStarted(Activity a) {
                 started++;
+                // 手表遥控不做自动更新检查（原来那套会去问吃药提醒的版本）
                 if (started == 1) {
                     Activity top = cur.get();
-                    UpdateChecker.checkSilent(
-                            (top != null && !top.isFinishing()) ? top : a);
                 }
             }
 

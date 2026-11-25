@@ -32,14 +32,14 @@ public class UpdateChecker {
      * 所以主用 jsDelivr（同一个仓库的 CDN 镜像），raw 留作备用。
      */
     public static final String VERSION_URL =
-            "https://ghproxy.net/https://raw.githubusercontent.com/Himzer240/medreminder/main/updates/version.json";
+            "https://ghproxy.net/https://raw.githubusercontent.com/Himzer240/watchremote/main/updates/version.json";
 
-    private static final String RAW_BASE = "https://raw.githubusercontent.com/Himzer240/medreminder/main/";
-    private static final String JSD = "https://cdn.jsdelivr.net/gh/Himzer240/medreminder@main/";
-    private static final String JSD_FAST = "https://fastly.jsdelivr.net/gh/Himzer240/medreminder@main/";
+    private static final String RAW_BASE = "https://raw.githubusercontent.com/Himzer240/watchremote/main/";
+    private static final String JSD = "https://cdn.jsdelivr.net/gh/Himzer240/watchremote@main/";
+    private static final String JSD_FAST = "https://fastly.jsdelivr.net/gh/Himzer240/watchremote@main/";
     private static final String PROXY1 = "https://ghproxy.net/";
     private static final String PROXY2 = "https://gh-proxy.com/";
-    private static final String IN_REPO = "/Himzer240/medreminder/main/";
+    private static final String IN_REPO = "/Himzer240/watchremote/main/";
 
     /** 版本信息地址：代理最容易连，jsDelivr 缓存太久放后面 */
     private static String[] versionUrls() {
