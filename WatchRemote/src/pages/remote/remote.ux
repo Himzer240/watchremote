@@ -91,8 +91,9 @@ export default {
     // 手表系统会把「从边缘往右滑」变成返回事件，这里补发一条右滑指令
     const now = Date.now()
     // 正常触摸已经发出指令了就别再补一条，免得滑两次
-    if (now - (this.lastSend || 0) > 600 && this.lastTouch && now - this.lastTouch < 900) {
-      this.send('right')
+    // 只吃掉「退出」这件事，右滑本身照样发给手机
+    if (now - (this.lastSend || 0) > 600 && this.lastTouch && now - this.lastTouch < 1200) {
+      this.sendGesture('right', 0.7)
     }
     return true
   },
@@ -112,6 +113,7 @@ export default {
     if (!t) return
     this.sx = pick(t, 'pageX', 'clientX', 'screenX', 'x')
     this.sy = pick(t, 'pageY', 'clientY', 'screenY', 'y')
+    this.lastTouch = Date.now()
   },
 
   te(e) {
