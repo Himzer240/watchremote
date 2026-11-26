@@ -2,7 +2,10 @@
   <div class="page">
     <div class="hd">
       <text class="hdTitle">手表遥控</text>
-      <text class="hdSub">{{connTx}}</text>
+      <div class="hdRight">
+        <text class="hdSub">{{connTx}}</text>
+        <text class="quit" onclick="exitApp">退出</text>
+      </div>
     </div>
 
     <div class="pad" ontouchstart="ts" ontouchend="te" onclick="tap">
@@ -36,7 +39,9 @@
   .page { width:432px; height:514px; background-color:#0E1214; padding:14px 16px; flex-direction:column; }
   .hd { height:44px; flex-direction:row; align-items:center; justify-content:space-between; }
   .hdTitle { font-size:26px; color:#F2F5F7; font-weight:bold; }
-  .hdSub { font-size:13px; color:#7C8A92; }
+  .hdRight { flex-direction:row; align-items:center; }
+  .hdSub { font-size:13px; color:#7C8A92; margin-right:12px; }
+  .quit { font-size:14px; color:#F0A35E; }
   .pad { flex:1; margin-top:10px; background-color:#141A1E; border-radius:18px; border-width:1px; border-color:#1E2A31; flex-direction:column; justify-content:center; align-items:center; }
   .padTx { font-size:20px; color:#E8EEF1; font-weight:bold; }
   .padSub { font-size:13px; color:#7C8A92; margin-top:8px; }
@@ -74,6 +79,15 @@ export default {
       this.conn = null
       this.connTx = '通道不可用'
     }
+  },
+
+  // 右滑/返回键不再让快应用退出：一律自己吃掉，返回由手机执行
+  onBackPress() {
+    return true
+  },
+
+  exitApp() {
+    try { this.$app.exit() } catch (e) {}
   },
 
   onShow() {
