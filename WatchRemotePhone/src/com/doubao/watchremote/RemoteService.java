@@ -99,12 +99,52 @@ public class RemoteService extends AccessibilityService {
         }
     }
 
+    /** 手表原样发来的坐标：nx/ny 是 0~1 比例，按手机屏幕尺寸还原 */
+    public static void point(String act, float nx1, float ny1, float nx2, float ny2) {
+        final RemoteService s = inst;
+        if (s == null) return;
+        s.main.post(new Runnable() {
+            @Override
+            public void run() {
+                DisplayMetrics dm = s.getResources().getDisplayMetrics();
+                float w = dm.widthPixels;
+                float h = dm.heightPixels;
+                float x1 = clamp(nx1, w), y1 = clamp(ny1, h);
+                float x2 = clamp(nx2, w), y2 = clamp(ny2, h);
+                if ("tap".equals(act)) {
+                    s.swipe(x1, y1, x1 + 1f, y1, 70);
+                } else {
+                    s.swipe(x1, y1, x2, y2, 300);
+                }
+            }
+        });
+    }
+
+    private static float clamp(float ratio, float max) {
+        if (ratio < 0.06f) ratio = 0.06f;
+        if (ratio > 0.94f) ratio = 0.94f;
+        return ratio * max;
+    }
+
     private void swipe(float x1, float y1, float x2, float y2) {
         Path p = new Path();
         p.moveTo(x1, y1);
         p.lineTo(x2, y2);
         GestureDescription.Builder b = new GestureDescription.Builder();
         b.addStroke(new GestureDescription.StrokeDescription(p, 0, 260));
+        dispatch(b);
+    }
+
+    private void swipe(float x1, float y1, float x2, float y2, int ms) {
+        Path p = new Path();
+        p.moveTo(x1, y1);
+        p.lineTo(x2, y2);
+        GestureDescription.Builder b = new GestureDescription.Builder();
+        b.addStroke(new GestureDescription.StrokeDescription(p, 0, ms));
+        dispatch(b);
+    }
+
+    private void dispatch(GestureDescription.Builder b) {
         try {
             dispatchGesture(b.build(), null, null);
         } catch (Throwable ignored) {

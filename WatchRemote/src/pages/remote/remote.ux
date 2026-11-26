@@ -8,9 +8,9 @@
       </div>
     </div>
 
-    <div class="pad" ontouchstart="ts" ontouchend="te" onclick="tap">
+    <div class="pad" ontouchstart="ts" ontouchend="te">
       <text class="padTx">在这里滑动</text>
-      <text class="padSub">上滑下翻 · 下滑上翻 · 左滑返回 · 右滑下一页</text>
+      <text class="padSub">上滑下翻 · 下滑上翻 · 左右滑翻页 · 点一下=点手机屏幕</text>
       <text class="padDir">{{dirTx}}</text>
     </div>
 
@@ -83,6 +83,12 @@ export default {
 
   // 右滑/返回键不再让快应用退出：一律自己吃掉，返回由手机执行
   onBackPress() {
+    // 手表系统会把「从边缘往右滑」变成返回事件，这里补发一条右滑指令
+    const now = Date.now()
+    // 正常触摸已经发出指令了就别再补一条，免得滑两次
+    if (now - (this.lastSend || 0) > 600 && this.lastTouch && now - this.lastTouch < 900) {
+      this.send('right')
+    }
     return true
   },
 
@@ -104,25 +110,48 @@ export default {
   te(e) {
     const t = (e.changedTouches && e.changedTouches[0]) || (e.touches && e.touches[0])
     if (!t) return
-    const dx = (t.pageX || t.clientX || 0) - this.sx
-    const dy = (t.pageY || t.clientY || 0) - this.sy
-    if (Math.abs(dx) < 24 && Math.abs(dy) < 24) return
-    if (Math.abs(dy) >= Math.abs(dx)) {
-      this.send(dy < 0 ? 'up' : 'down')
-    } else {
-      this.send(dx < 0 ? 'left' : 'right')
+    const px = t.pageX !== undefined ? t.pageX : (t.clientX || 0)
+    const py = t.pageY !== undefined ? t.pageY : (t.clientY || 0)
+    this.lastTouch = Date.now()
+    const dx = px - this.sx
+    const dy = py - this.sy
+    // 手表页面 432 x 514，换算成 0~1 的比例，交给手机按屏幕尺寸还原
+    const nx1 = this.sx / 432
+    const ny1 = this.sy / 514
+    const nx2 = px / 432
+    const ny2 = py / 514
+    if (Math.abs(dx) < 18 && Math.abs(dy) < 18) {
+      this.sendPoint('tap', nx1, ny1, nx1, ny1, '点按')
+      return
     }
+    this.sendPoint('swipe', nx1, ny1, nx2, ny2, Math.abs(dy) >= Math.abs(dx) ? (dy < 0 ? '上滑' : '下滑') : (dx < 0 ? '左滑' : '右滑'))
   },
 
-  tap() { this.send('top') },
+  tap() { this.send('click') },
 
   sendUp() { this.send('up') },
   sendDown() { this.send('down') },
   sendLeft() { this.send('back') },
   sendRight() { this.send('right') },
 
+  sendPoint(kind, nx1, ny1, nx2, ny2, label) {
+    this.dirTx = label
+    this.lastSend = Date.now()
+    if (!this.conn) { this.tip('没有连接通道'); return }
+    const that = this
+    try {
+      this.conn.send({
+        data: { tag: 'remote', act: kind, nx1: nx1, ny1: ny1, nx2: nx2, ny2: ny2 },
+        success: function () { that.tip('已发送：' + label) },
+        fail: function () { that.tip('发送失败，检查手机端是否连上') }
+      })
+    } catch (e) { this.tip('发送失败') }
+    try { vibrator.vibrate({ mode: 'short' }) } catch (e) {}
+  },
+
   send(act) {
-    const names = { up: '下翻', down: '上翻', left: '左滑', right: '右滑', top: '回顶部', back: '返回' }
+    this.lastSend = Date.now()
+    const names = { up: '下翻', down: '上翻', left: '左滑', right: '右滑', click: '点击', back: '返回' }
     this.dirTx = names[act] || act
     if (!this.conn) { this.tip('没有连接通道'); return }
     const that = this
