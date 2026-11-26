@@ -317,8 +317,18 @@ public class WatchBridge {
             }
             if ("remote".equals(tag)) {
                 String act = o.optString("act", "");
-                RemoteService.perform(act);
-                lastRecv = stamp + " 表上遥控 " + act;
+                if ("remoteGesture".equals(act)) {
+                    String dir = o.optString("dir", "");
+                    float len = (float) o.optDouble("len", 0.5);
+                    RemoteService.gesture(dir, len);
+                    lastRecv = stamp + " 表上" + dir + " (" + len + ")";
+                } else if ("tap".equals(act)) {
+                    RemoteService.tap();
+                    lastRecv = stamp + " 表上点按";
+                } else {
+                    RemoteService.perform(act);
+                    lastRecv = stamp + " 表上遥控 " + act;
+                }
                 notifyUi();
                 return;
             }

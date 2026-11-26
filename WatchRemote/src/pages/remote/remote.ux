@@ -56,6 +56,11 @@
 
 <script>
 import interconnect from '@system.interconnect'
+
+function pick(t, a, b, c, d) {
+  const v = t[a] !== undefined ? t[a] : (t[b] !== undefined ? t[b] : (t[c] !== undefined ? t[c] : t[d]))
+  return typeof v === 'number' ? v : 0
+}
 import vibrator from '@system.vibrator'
 
 export default {
@@ -104,30 +109,50 @@ export default {
 
   ts(e) {
     const t = (e.touches && e.touches[0]) || (e.changedTouches && e.changedTouches[0])
-    if (t) { this.sx = t.pageX || t.clientX || 0; this.sy = t.pageY || t.clientY || 0 }
+    if (!t) return
+    this.sx = pick(t, 'pageX', 'clientX', 'screenX', 'x')
+    this.sy = pick(t, 'pageY', 'clientY', 'screenY', 'y')
   },
 
   te(e) {
     const t = (e.changedTouches && e.changedTouches[0]) || (e.touches && e.touches[0])
     if (!t) return
-    const px = t.pageX !== undefined ? t.pageX : (t.clientX || 0)
-    const py = t.pageY !== undefined ? t.pageY : (t.clientY || 0)
     this.lastTouch = Date.now()
+    const px = pick(t, 'pageX', 'clientX', 'screenX', 'x')
+    const py = pick(t, 'pageY', 'clientY', 'screenY', 'y')
     const dx = px - this.sx
     const dy = py - this.sy
-    // 手表页面 432 x 514，换算成 0~1 的比例，交给手机按屏幕尺寸还原
-    const nx1 = this.sx / 432
-    const ny1 = this.sy / 514
-    const nx2 = px / 432
-    const ny2 = py / 514
+    // 点一下：手机上就在屏幕中间点一下
     if (Math.abs(dx) < 18 && Math.abs(dy) < 18) {
-      this.sendPoint('tap', nx1, ny1, nx1, ny1, '点按')
+      this.send('tap')
       return
     }
-    this.sendPoint('swipe', nx1, ny1, nx2, ny2, Math.abs(dy) >= Math.abs(dx) ? (dy < 0 ? '上滑' : '下滑') : (dx < 0 ? '左滑' : '右滑'))
+    // 方向按手表手势，长度换算成手机从屏幕正中间滑出去的距离
+    const vertical = Math.abs(dy) >= Math.abs(dx)
+    const dir = vertical ? (dy < 0 ? 'up' : 'down') : (dx < 0 ? 'left' : 'right')
+    let len = vertical ? Math.abs(dy) / 360 : Math.abs(dx) / 300
+    if (len < 0.35) len = 0.35
+    if (len > 1) len = 1
+    this.sendGesture(dir, len)
   },
 
-  tap() { this.send('click') },
+  sendGesture(dir, len) {
+    const names = { up: '上滑', down: '下滑', left: '左滑', right: '右滑' }
+    this.dirTx = names[dir] || dir
+    this.lastSend = Date.now()
+    if (!this.conn) { this.tip('没有连接通道'); return }
+    const that = this
+    try {
+      this.conn.send({
+        data: { tag: 'remote', act: 'remoteGesture', dir: dir, len: len },
+        success: function () { that.tip('已发送：' + (names[dir] || dir)) },
+        fail: function () { that.tip('发送失败，检查手机端是否连上') }
+      })
+    } catch (e) { this.tip('发送失败') }
+    try { vibrator.vibrate({ mode: 'short' }) } catch (e) {}
+  },
+
+  pick(t) { return 0 },
 
   sendUp() { this.send('up') },
   sendDown() { this.send('down') },

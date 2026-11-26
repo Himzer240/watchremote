@@ -99,6 +99,48 @@ public class RemoteService extends AccessibilityService {
         }
     }
 
+    /** 手表手势：方向 + 长度（0.35~1），一律从手机屏幕正中间起手 */
+    public static void gesture(String dir, float len) {
+        final RemoteService s = inst;
+        if (s == null || dir == null) return;
+        if (len < 0.3f) len = 0.3f;
+        if (len > 1f) len = 1f;
+        final float L = len;
+        s.main.post(new Runnable() {
+            @Override
+            public void run() {
+                DisplayMetrics dm = s.getResources().getDisplayMetrics();
+                float w = dm.widthPixels;
+                float h = dm.heightPixels;
+                float cx = w / 2f, cy = h / 2f;
+                float dy = h * 0.45f * L;
+                float dx = w * 0.45f * L;
+                switch (dir) {
+                    case "up":    s.swipe(cx, cy, cx, cy - dy, 300); break;
+                    case "down":  s.swipe(cx, cy, cx, cy + dy, 300); break;
+                    case "left":  s.swipe(cx, cy, cx - dx, cy, 300); break;
+                    case "right": s.swipe(cx, cy, cx + dx, cy, 300); break;
+                    default: break;
+                }
+            }
+        });
+    }
+
+    /** 点按 = 手机屏幕正中间点一下 */
+    public static void tap() {
+        final RemoteService s = inst;
+        if (s == null) return;
+        s.main.post(new Runnable() {
+            @Override
+            public void run() {
+                DisplayMetrics dm = s.getResources().getDisplayMetrics();
+                float cx = dm.widthPixels / 2f;
+                float cy = dm.heightPixels / 2f;
+                s.swipe(cx, cy, cx + 1f, cy, 70);
+            }
+        });
+    }
+
     /** 手表原样发来的坐标：nx/ny 是 0~1 比例，按手机屏幕尺寸还原 */
     public static void point(String act, float nx1, float ny1, float nx2, float ny2) {
         final RemoteService s = inst;
